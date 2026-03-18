@@ -285,16 +285,16 @@ public static void printToSysoutWithServers(Map<FileInfo, Set<InetSocketAddress>
 	//Añadidos para manejo mapas
 	@Override
 	public boolean equals(Object obj) {
-	    if (this == obj) return true;  //Compara las referencias (optimización)
-	    if (obj == null || getClass() != obj.getClass()) return false;  //Si son de clases diferentes
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
 	    FileInfo other = (FileInfo) obj;
-	    return fileHash.equals(other.fileHash) &&  //Compara los valores de los campos
-	           fileName.equals(other.fileName) &&
-	           fileSize == other.fileSize;
+	    // Usamos Objects.equals para evitar petes si el hash es null
+	    // Solo comparamos el hash; el nombre es solo una etiqueta decorativa
+	    return Objects.equals(fileHash, other.fileHash);
 	}
-
+	
 	@Override
 	public int hashCode() {
-	    return Objects.hash(fileHash, fileName, fileSize);  //Calcula el hash en base a los campos relevantes
+	    return Objects.hash(fileHash);
 	}
 }
